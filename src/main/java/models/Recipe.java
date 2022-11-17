@@ -1,8 +1,14 @@
 package models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="recipe")
@@ -10,10 +16,11 @@ public class Recipe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_recipe;
+
+    @Column(name = "id_recipe")
+    private Long id;
     private boolean isPrivate;
     private String title;
-    private String ingredientsList;
     private String steps;
     private int servings;
     private int preDuration ;
@@ -23,17 +30,51 @@ public class Recipe {
     private LocalDate createdAt;
     private String noteOfTheAuthor;
 
-    private Difficulty id_difficulty;
+    @ManyToOne
+    private Difficulty difficulty;
 
-    private Cooking id_cooking;
+    @ManyToOne
+    private Cooking cooking;
 
-    private User id_user;
+    @ManyToOne
+    private User user;
 
-    public Recipe(Long id_recipe, boolean isPrivate, String title, String ingredientsList, String steps, int servings, int preDuration, int bakingTime, int restTime, float cost, LocalDate createdAt, String noteOfTheAuthor, Difficulty difficulty, Cooking cooking, User user) {
-        this.id_recipe = id_recipe;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "recipe_ingredient",
+            joinColumns = @JoinColumn(name = "id_recipe"),
+            inverseJoinColumns = @JoinColumn(name = "id_ingredient")
+    )
+    private Set<Ingredient> ingredientList = new HashSet<>();
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Cooking getCooking() {
+        return cooking;
+    }
+
+    public void setCooking(Cooking cooking) {
+        this.cooking = cooking;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Recipe(Long id_recipe, boolean isPrivate, String title, String steps, int servings, int preDuration, int bakingTime, int restTime, float cost, LocalDate createdAt, String noteOfTheAuthor, Difficulty difficulty, Cooking cooking, User user) {
+        this.id = id_recipe;
         this.isPrivate = isPrivate;
         this.title = title;
-        this.ingredientsList = ingredientsList;
         this.steps = steps;
         this.servings = servings;
         this.preDuration = preDuration;
@@ -42,9 +83,25 @@ public class Recipe {
         this.cost = cost;
         this.createdAt = createdAt;
         this.noteOfTheAuthor = noteOfTheAuthor;
-        this.id_difficulty = difficulty;
-        this.id_cooking = cooking;
-        this.id_user = user;
+        this.difficulty = difficulty;
+        this.cooking = cooking;
+        this.user = user;
+    }
+
+    public Recipe(boolean isPrivate, String title, String steps, int servings, int preDuration, int bakingTime, int restTime, float cost, LocalDate createdAt, String noteOfTheAuthor, Difficulty difficulty, Cooking cooking, User user) {
+        this.isPrivate = isPrivate;
+        this.title = title;
+        this.steps = steps;
+        this.servings = servings;
+        this.preDuration = preDuration;
+        this.bakingTime = bakingTime;
+        this.restTime = restTime;
+        this.cost = cost;
+        this.createdAt = createdAt;
+        this.noteOfTheAuthor = noteOfTheAuthor;
+        this.difficulty = difficulty;
+        this.cooking = cooking;
+        this.user = user;
     }
 
     public Recipe() {
@@ -53,11 +110,11 @@ public class Recipe {
 
 
     public Long getId_recipe() {
-        return id_recipe;
+        return id;
     }
 
     public void setId_recipe(Long id_recipe) {
-        this.id_recipe = id_recipe;
+        this.id = id_recipe;
     }
 
     public boolean isPrivate() {
@@ -74,14 +131,6 @@ public class Recipe {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getIngredientsList() {
-        return ingredientsList;
-    }
-
-    public void setIngredientsList(String ingredientsList) {
-        this.ingredientsList = ingredientsList;
     }
 
     public String getSteps() {
@@ -151,10 +200,10 @@ public class Recipe {
     @Override
     public String toString() {
         return "Recipe{" +
-                "id_recipe=" + id_recipe +
+                "id_recipe=" + id +
                 ", isPrivate=" + isPrivate +
                 ", title='" + title + '\'' +
-                ", ingredientsList='" + ingredientsList + '\'' +
+                ", ingredientList='" + ingredientList + '\'' +
                 ", steps='" + steps + '\'' +
                 ", servings=" + servings +
                 ", preDuration=" + preDuration +
@@ -163,33 +212,17 @@ public class Recipe {
                 ", cost=" + cost +
                 ", createdAt=" + createdAt +
                 ", noteOfTheAuthor='" + noteOfTheAuthor + '\'' +
-                ", id_difficulty=" + id_difficulty +
-                ", id_cooking=" + id_cooking +
-                ", id_user=" + id_user +
+                ", difficulty=" + difficulty +
+                ", cooking=" + cooking +
+                ", user=" + user +
                 '}';
     }
 
-    public Long getId_difficulty() {
-        return id_difficulty;
+    public Set<Ingredient> getIngredientList() {
+        return ingredientList;
     }
 
-    public void setDifficulty(Long difficulty) {
-        this.id_difficulty = difficulty;
-    }
-
-    public Long getId_cooking() {
-        return id_cooking;
-    }
-
-    public void setId_cooking(Long cooking) {
-        this.id_cooking = cooking;
-    }
-
-    public Long getId_user() {
-        return id_user;
-    }
-
-    public void setUser(Long user) {
-        this.id_user = user;
+    public void setIngredientList(Set<Ingredient> ingredientList) {
+        this.ingredientList = ingredientList;
     }
 }

@@ -10,4 +10,8 @@ public class DaoFactory {
     public static CrudDAO<Recipe> getRecipeJPADao(){
         return new RecipaJPADAO();
     }
+
+    public static CrudDAO<Ingredient> getIngredientJPADao(){
+        return new IngredientJPADAO();
+    }
 }

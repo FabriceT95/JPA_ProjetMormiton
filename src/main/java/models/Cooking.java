@@ -1,20 +1,36 @@
 package models;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "cooking")
 public class Cooking {
-    private int id_cooking;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
 
-    public Cooking(int id_cooking, String name) {
-        this.id_cooking = id_cooking;
+
+    public Cooking(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    public int getId_cooking() {
-        return id_cooking;
+    public Cooking(String name) {
+        this.name = name;
     }
 
-    public void setId_cooking(int id_cooking) {
-        this.id_cooking = id_cooking;
+    public Cooking() {
+
+    }
+
+    public Long getId_cooking() {
+        return id;
+    }
+
+    public void setId_cooking(Long id_cooking) {
+        this.id = id_cooking;
     }
 
     public String getName() {
@@ -28,9 +44,14 @@ public class Cooking {
     @Override
     public String toString() {
         return "Cooking{" +
-                "id_cooking=" + id_cooking +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }
 

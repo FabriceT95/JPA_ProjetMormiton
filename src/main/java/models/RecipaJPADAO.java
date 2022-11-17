@@ -1,6 +1,7 @@
 package models;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
@@ -22,7 +23,7 @@ public class RecipaJPADAO implements CrudDAO<Recipe>{
         EntityManager em = ConnectionManager.getEntityManager();
         TypedQuery<Recipe> query = em.createQuery("select r from Recipe r", Recipe.class);
         List<Recipe> recipes = query.getResultList();
-        em.close();
+       // em.close();
         return recipes;
     }
 
@@ -80,8 +81,22 @@ public class RecipaJPADAO implements CrudDAO<Recipe>{
         return null;
     }
 
-    @Override
+   /* @Override
     public Recipe create(Recipe element) {
-        return null;
-    }
+        EntityManager em = ConnectionManager.getEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try {
+            et.begin();
+            em.persist(element);
+            et.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if(et.isActive()) {
+                et.rollback();
+            }
+        } finally {
+            em.close();
+        }
+        return element;
+    }*/
 }

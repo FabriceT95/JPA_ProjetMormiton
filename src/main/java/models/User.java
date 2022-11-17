@@ -1,25 +1,42 @@
 package models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="user")
 public class User {
-    private int id_user;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String lastName;
     private String firstName;
     private String email;
     private String pwd;
 
-    public User(int id_user, String lastName, String firstName, String email) {
-        this.id_user = id_user;
+    public User(Long id_user, String lastName, String firstName, String email) {
+        this.id = id_user;
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
     }
 
-    public int getId_user() {
-        return id_user;
+    public User(String lastName, String firstName, String email) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public User() {
+
+    }
+
+    public Long getId_user() {
+        return id;
+    }
+
+    public void setId_user(Long id_user) {
+        this.id = id_user;
     }
 
     public String getLastName() {
@@ -57,7 +74,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id_user=" + id_user +
+                "id=" + id +
                 ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", email='" + email + '\'' +

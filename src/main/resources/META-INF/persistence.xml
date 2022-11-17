@@ -6,7 +6,7 @@
     <persistence-unit name="myPU">
         <properties>
             <property name="jaka" value="true"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/recettesappbenoitfabrice?serverTimezone=UTC"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/recettes_jpa?serverTimezone=UTC"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value="FormationM2i"/>

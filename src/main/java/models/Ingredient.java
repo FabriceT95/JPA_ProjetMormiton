@@ -2,34 +2,39 @@ package models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name="difficulty")
-public class Difficulty {
+@Table(name="ingredient")
+public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_ingredient")
     private Long id;
+
     private String name;
 
-    public Difficulty(Long id_difficulty, String name) {
-        this.id = id_difficulty;
+
+    public Ingredient(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    public Difficulty(String name) {
+    public Ingredient(String name) {
         this.name = name;
     }
 
-    public Difficulty() {
+    public Ingredient() {
 
     }
 
-
-    public Long getId_difficulty() {
+    public Long getId() {
         return id;
     }
 
-    public void setId_difficulty(Long id_difficulty) {
-        this.id = id_difficulty;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -42,7 +47,7 @@ public class Difficulty {
 
     @Override
     public String toString() {
-        return "Difficulty{" +
+        return "Ingredient{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
